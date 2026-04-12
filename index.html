@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Aura Bistro | Milano</title>
+    <!-- Modern high-end thin font (Vogue style) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="bistro-header">
+        <h1>AURA</h1>
+        <p class="subtitle">BISTRO MILANO</p>
+    </header>
+
+    <nav class="sticky-nav" id="categoryNav">
+        <!-- Categories will be injected here dynamically -->
+    </nav>
+
+    <main class="menu-container" id="menuContainer">
+        <!-- Menu items will be injected here dynamically -->
+        <div class="loader">Loading our finest selections...</div>
+    </main>
+
+    <footer class="bistro-footer">
+        <p>Via Montenapoleone, Milano</p>
+        <a href="admin.html" class="admin-link">Admin Access</a>
+    </footer>
+
+    <!-- Supabase Client -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

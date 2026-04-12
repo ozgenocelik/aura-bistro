@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "aura-bistro",
+  "builds": [
+    {
+      "src": "*.html",
+      "use": "@vercel/static"
+    }
+  ]
+}
