@@ -5,10 +5,13 @@
 CREATE TABLE menu_items (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
-  category TEXT NOT NULL,
-  name TEXT NOT NULL,
-  description TEXT,
-  price TEXT, -- Stored as text to allow symbols like € or ₺
+  category_en TEXT NOT NULL,
+  category_it TEXT NOT NULL,
+  name_en TEXT NOT NULL,
+  name_it TEXT NOT NULL,
+  description_en TEXT,
+  description_it TEXT,
+  price TEXT, -- Stored as text to allow symbols like €
   image_url TEXT,
   is_available BOOLEAN DEFAULT true
 );
