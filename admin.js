@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const passwordInput = document.getElementById('adminPassword');
     const loginError = document.getElementById('loginError');
     const adminContainer = document.querySelector('.admin-container');
+    const logoutBtn = document.getElementById('logoutBtn');
 
     // Check if already logged in (session only)
     if (sessionStorage.getItem('adminAuth') === 'true') {
@@ -22,6 +23,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     passwordInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') handleLogin();
     });
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('adminAuth');
+            location.reload();
+        });
+    }
 
     function handleLogin() {
         if (passwordInput.value === ACCESS_KEY) {
