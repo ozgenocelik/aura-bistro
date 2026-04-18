@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const { data: dbData, error } = await supabaseClient.from('menu_items').select('*').order('category_en', { ascending: true });
                 if (!error && dbData) {
                     data = dbData;
-                    updateStatus('🟢 Connesso al Database', 'success');
+                    updateStatus('🟢 Connected to Supabase', 'success');
                 } else if (error) {
                     updateStatus('🔴 Errore di connessione', 'error');
                     console.error("Supabase Error:", error);
@@ -159,8 +159,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </td>
                     <td data-label="Prezzo">${item.price}</td>
                     <td data-label="Azioni" class="actions">
-                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem;" onclick="editItem('${item.id}', '${escapeHtml(item.category_en)}', '${escapeHtml(item.category_it)}', '${escapeHtml(item.name_en)}', '${escapeHtml(item.name_it)}', '${escapeHtml(String(item.price))}', '${escapeHtml(item.description_en)}', '${escapeHtml(item.description_it)}')">Modifica</button>
-                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem; background: #c62828;" onclick="deleteItem('${item.id}')">Elimina</button>
+                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem;" onclick="editItem('${item.id}', '${escapeHtml(item.category_en)}', '${escapeHtml(item.category_it)}', '${escapeHtml(item.name_en)}', '${escapeHtml(item.name_it)}', '${escapeHtml(String(item.price))}', '${escapeHtml(item.description_en)}', '${escapeHtml(item.description_it)}')">EDIT</button>
+                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem; background: #c62828;" onclick="deleteItem('${item.id}')">DEL</button>
                     </td>
                 `;
                 tableBody.appendChild(tr);
