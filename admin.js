@@ -14,6 +14,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     const adminContainer = document.querySelector('.admin-container');
     const logoutBtn = document.getElementById('logoutBtn');
 
+    // Admin i18n Logic
+    let currentAdminLang = localStorage.getItem('auraAdminLang') || 'en';
+    
+    function setAdminLang(lang) {
+        currentAdminLang = lang;
+        localStorage.setItem('auraAdminLang', lang);
+
+        document.getElementById('adminLangEn').classList.toggle('active', lang === 'en');
+        document.getElementById('adminLangIt').classList.toggle('active', lang === 'it');
+
+        document.querySelectorAll('.i18n').forEach(el => {
+            el.innerHTML = el.getAttribute(`data-${lang}`);
+        });
+
+        document.querySelectorAll('.i18n-ph').forEach(el => {
+            el.setAttribute('placeholder', el.getAttribute(`data-${lang}-ph`));
+        });
+
+        if (sessionStorage.getItem('adminAuth') === 'true') {
+            loadItems(); // re-render table with correct language
+        }
+    }
+
+    document.getElementById('adminLangEn').addEventListener('click', () => setAdminLang('en'));
+    document.getElementById('adminLangIt').addEventListener('click', () => setAdminLang('it'));
+    
+    // Initialize admin lang
+    setAdminLang(currentAdminLang);
+
     // Check if already logged in (session only)
     if (sessionStorage.getItem('adminAuth') === 'true') {
         unlockDashboard();
@@ -153,22 +182,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             tableBody.innerHTML = '';
             if (data.length === 0) {
-                tableBody.innerHTML = '<tr><td colspan="4">Nessun elemento trovato nel database.</td></tr>';
+                tableBody.innerHTML = `<tr><td colspan="4" class="i18n" data-en="No items found." data-it="Nessun elemento trovato.">${currentAdminLang==='en'?'No items found.':'Nessun elemento trovato.'}</td></tr>`;
                 return;
             }
+
+            const lblCat = currentAdminLang === 'en' ? 'Category' : 'Categoria';
+            const lblName = currentAdminLang === 'en' ? 'Name' : 'Nome';
+            const lblPrice = currentAdminLang === 'en' ? 'Price' : 'Prezzo';
+            const lblActions = currentAdminLang === 'en' ? 'Actions' : 'Azioni';
+            const btnEdit = currentAdminLang === 'en' ? 'EDIT' : 'MODIFICA';
+            const btnDel = currentAdminLang === 'en' ? 'DEL' : 'ELIMINA';
 
             data.forEach(item => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td data-label="Categoria">${item.category_en} / ${item.category_it}</td>
-                    <td data-label="Nome">
+                    <td data-label="${lblCat}">${item.category_en} / ${item.category_it}</td>
+                    <td data-label="${lblName}">
                         <strong>${item.name_en}</strong> / <em>${item.name_it}</em><br>
                         <small style="color: gray;">${item.description_en || ''} / ${item.description_it || ''}</small>
                     </td>
-                    <td data-label="Prezzo">${item.price}</td>
-                    <td data-label="Azioni" class="actions">
-                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem;" onclick="editItem('${item.id}', '${escapeHtml(item.category_en)}', '${escapeHtml(item.category_it)}', '${escapeHtml(item.name_en)}', '${escapeHtml(item.name_it)}', '${escapeHtml(String(item.price))}', '${escapeHtml(item.description_en)}', '${escapeHtml(item.description_it)}')">EDIT</button>
-                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem; background: #c62828;" onclick="deleteItem('${item.id}')">DEL</button>
+                    <td data-label="${lblPrice}">${item.price}</td>
+                    <td data-label="${lblActions}" class="actions">
+                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem;" onclick="editItem('${item.id}', '${escapeHtml(item.category_en)}', '${escapeHtml(item.category_it)}', '${escapeHtml(item.name_en)}', '${escapeHtml(item.name_it)}', '${escapeHtml(String(item.price))}', '${escapeHtml(item.description_en)}', '${escapeHtml(item.description_it)}')">${btnEdit}</button>
+                        <button type="button" class="btn" style="padding: 0.3rem 0.6rem; background: #c62828;" onclick="deleteItem('${item.id}')">${btnDel}</button>
                     </td>
                 `;
                 tableBody.appendChild(tr);
