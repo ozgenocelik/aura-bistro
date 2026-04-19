@@ -32,6 +32,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             el.setAttribute('placeholder', el.getAttribute(`data-${lang}-ph`));
         });
 
+        // Toggle form groups
+        document.querySelectorAll('.lang-en-grp').forEach(el => el.style.display = lang === 'en' ? 'block' : 'none');
+        document.querySelectorAll('.lang-it-grp').forEach(el => el.style.display = lang === 'it' ? 'block' : 'none');
+
         if (sessionStorage.getItem('adminAuth') === 'true') {
             loadItems(); // re-render table with correct language
         }
@@ -96,13 +100,18 @@ document.addEventListener('DOMContentLoaded', async () => {
             e.preventDefault();
             
             const id = document.getElementById('itemId').value;
-            const category_en = document.getElementById('itemCategoryEn').value;
-            const category_it = document.getElementById('itemCategoryIt').value;
-            const name_en = document.getElementById('itemNameEn').value;
-            const name_it = document.getElementById('itemNameIt').value;
-            const price = document.getElementById('itemPrice').value;
-            const description_en = document.getElementById('itemDescEn').value;
-            const description_it = document.getElementById('itemDescIt').value;
+            const category_en = document.getElementById('itemCategoryEn').value.trim();
+            const category_it = document.getElementById('itemCategoryIt').value.trim();
+            const name_en = document.getElementById('itemNameEn').value.trim();
+            const name_it = document.getElementById('itemNameIt').value.trim();
+            const price = document.getElementById('itemPrice').value.trim();
+            const description_en = document.getElementById('itemDescEn').value.trim();
+            const description_it = document.getElementById('itemDescIt').value.trim();
+
+            if (!category_en || !category_it || !name_en || !name_it || !price) {
+                showAlert(currentAdminLang === 'en' ? 'Please switch languages using the top right toggle to fill both EN and IT fields!' : 'Per favore, cambia lingua (in alto a destra) e compila i campi sia in EN che in IT!', 'error');
+                return;
+            }
 
             const payload = { category_en, category_it, name_en, name_it, price, description_en, description_it };
 
