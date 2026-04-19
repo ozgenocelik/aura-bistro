@@ -195,11 +195,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             data.forEach(item => {
                 const tr = document.createElement('tr');
+                const catStr = currentAdminLang === 'en' ? item.category_en : item.category_it;
+                const nameStr = currentAdminLang === 'en' ? item.name_en : item.name_it;
+                const descStr = currentAdminLang === 'en' ? (item.description_en || '') : (item.description_it || '');
+
                 tr.innerHTML = `
-                    <td data-label="${lblCat}">${item.category_en} / ${item.category_it}</td>
+                    <td data-label="${lblCat}">${catStr}</td>
                     <td data-label="${lblName}">
-                        <strong>${item.name_en}</strong> / <em>${item.name_it}</em><br>
-                        <small style="color: gray;">${item.description_en || ''} / ${item.description_it || ''}</small>
+                        <strong>${nameStr}</strong><br>
+                        <small style="color: gray;">${descStr}</small>
                     </td>
                     <td data-label="${lblPrice}">${item.price}</td>
                     <td data-label="${lblActions}" class="actions">
