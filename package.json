@@ -1,0 +1,8 @@
+{
+  "name": "aura-bistro",
+  "version": "1.0.0",
+  "description": "Aura Bistro Automated Deployment Engine",
+  "scripts": {
+    "build": "node prepare-config.js"
+  }
+}
